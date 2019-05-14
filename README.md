@@ -12,7 +12,7 @@ Add to pubspec.yaml:
 
 ```
 dependencies:
-  flutter_nfc_reader:
+  flutter_nfc_plugin:
     git:
       url: git://github.com/dukhanov/flutter-nfc-plugin.git
       ref: master
