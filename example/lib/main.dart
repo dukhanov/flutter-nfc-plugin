@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:nfc_plugin/models/nfc_event.dart';
-import 'package:nfc_plugin/models/nfc_message.dart';
-import 'package:nfc_plugin/models/nfc_state.dart';
-import 'package:nfc_plugin/nfc_plugin.dart';
+import 'package:flutter_nfc_plugin/models/nfc_event.dart';
+import 'package:flutter_nfc_plugin/models/nfc_message.dart';
+import 'package:flutter_nfc_plugin/models/nfc_state.dart';
+import 'package:flutter_nfc_plugin/nfc_plugin.dart';
 
 void main() => runApp(MyApp());
 

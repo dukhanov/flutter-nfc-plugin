@@ -1,4 +1,4 @@
-import 'package:nfc_plugin/models/nfc_message.dart';
+import 'package:flutter_nfc_plugin/models/nfc_message.dart';
 
 class NfcEvent {
   NfcEvent({
