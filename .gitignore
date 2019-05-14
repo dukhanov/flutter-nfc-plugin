@@ -1,3 +1,12 @@
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
 .DS_Store
 .dart_tool/
 
