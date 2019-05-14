@@ -39,9 +39,9 @@ Add such intent filter to Android package's manifest file inside of the Main act
 </intent-filter>
 ```
 
-And `nfc_tech_filter.xml` to the `android/app/src/main/res/xml` folder (create if not exist). See `example`
+And `nfc_tech_filter.xml` to the `android/app/src/main/res/xml` folder (create if not exist). See `example project`
 
-<description>
+<details><summary>File: nfc_tech_filter.xml</summary>
 
 ```
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -78,7 +78,7 @@ And `nfc_tech_filter.xml` to the `android/app/src/main/res/xml` folder (create i
 </resources>
 ```
 
-</description>
+</details>
 
 Add such metadata to Android package's manifest file inside of the Main activity section:
 ```
