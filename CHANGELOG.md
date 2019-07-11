@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Adapt with Flutter 1.6
+
 ## 0.0.2
 
 * Fixed: podspec for iOS
