@@ -79,7 +79,9 @@ class NfcPlugin(registrar: Registrar) : MethodCallHandler, EventChannel.StreamHa
 	override fun onTagDiscovered(tag: Tag?) {
 		val message = ndefToMap(tag)
 		Log.d(PLUGIN_TAG, "callback: onTagDiscovered $message")
-		sendNfcListenerCallback(message)
+		activity.runOnUiThread {
+			sendNfcListenerCallback(message)
+		}
 	}
 
 	private fun checkIfStartedWithNfc() {
