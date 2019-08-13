@@ -1,6 +1,6 @@
 name: flutter_nfc_plugin
 description: Flutter NFC plugin project. Allowing to start you app within an NFC tag.
-version: 0.0.3
+version: 0.0.4
 author: Maxim Dukhanov <m.dukhanov@gmail.com>
 homepage: https://github.com/dukhanov/flutter-nfc-plugin
 

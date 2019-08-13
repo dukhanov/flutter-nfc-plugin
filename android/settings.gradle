@@ -1,1 +1,3 @@
 rootProject.name = 'nfc_plugin'
+android.enableJetifier=true
+android.useAndroidX=true
