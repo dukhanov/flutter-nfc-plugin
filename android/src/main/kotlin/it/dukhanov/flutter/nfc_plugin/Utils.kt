@@ -30,10 +30,9 @@ fun bytesToString(bytes: ByteArray?): String {
 
 fun ndefToMap(tag: Tag?): Map<String, Any?> {
 	return try {
-		val ndef = Ndef.get(tag)
 		val id = bytesToString(tag?.id)
 		val techList = tag?.techList?.toList()
-		val payload = getPayloadMessages(ndef.cachedNdefMessage)
+		var payload = getPayloadMessages(tag)
 		val message = mapOf(KEY_ID to id, KEY_PAYLOAD to payload, KEY_TECH_LIST to techList)
 
 		mapOf(KEY_ERROR to "", KEY_MESSAGE to message)
@@ -42,11 +41,15 @@ fun ndefToMap(tag: Tag?): Map<String, Any?> {
 	}
 }
 
-fun getPayloadMessages(message: NdefMessage?): List<String> {
-	var payload = listOf(String())
-	if (message == null) return payload
-	payload = message.records.map { r -> recordToString(r) }
-	return payload
+fun getPayloadMessages(tag: Tag?): List<String>? {
+	if (tag == null) {
+		return null
+	}
+	val ndef = Ndef.get(tag)
+	if (ndef == null || ndef.cachedNdefMessage == null) {
+		return null
+	}
+	return ndef.cachedNdefMessage.records.map { r -> recordToString(r) }
 }
 
 fun recordToString(record: NdefRecord): String {
