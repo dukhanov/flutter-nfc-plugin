@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Fixed: can't read tag id if the message is null
+
 ## 0.0.4
 
 * Upgraded to support AndroidX
