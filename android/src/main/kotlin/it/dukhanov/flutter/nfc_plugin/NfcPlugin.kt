@@ -1,16 +1,16 @@
 package it.dukhanov.flutter.nfc_plugin
 
 import android.annotation.TargetApi
-import android.nfc.NfcAdapter
+import android.util.Log
+import android.os.Build
+import android.nfc.*
+import android.content.Context
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
-import android.util.Log
-import android.os.Build
-import android.nfc.Tag
 import io.flutter.plugin.common.EventChannel.EventSink
 
 const val METHOD_GET_NFC_STATE = "getNfcState"
@@ -42,7 +42,8 @@ class NfcPlugin(registrar: Registrar) : MethodCallHandler, EventChannel.StreamHa
 	}
 
 	init {
-		nfcAdapter = NfcAdapter.getDefaultAdapter(activity)
+		val nfcManager = activity.getSystemService(Context.NFC_SERVICE) as? NfcManager
+		nfcAdapter = nfcManager?.defaultAdapter
 	}
 
 	override fun onMethodCall(call: MethodCall, result: Result) {
