@@ -1,15 +1,12 @@
 package it.dukhanov.flutter.nfc_plugin
 
 import android.content.Intent
-import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import android.nfc.tech.NdefFormatable
 import android.util.Log
-import java.lang.Exception
-import java.nio.charset.Charset
 import kotlin.experimental.and
 
 private const val KEY_ERROR = "error"
@@ -33,7 +30,11 @@ fun ndefToMap(tag: Tag?): Map<String, Any?> {
 		val id = bytesToString(tag?.id)
 		val techList = tag?.techList?.toList()
 		var payload = getPayloadMessages(tag)
-		val message = mapOf(KEY_ID to id, KEY_PAYLOAD to payload, KEY_TECH_LIST to techList)
+		val message = mapOf(
+				KEY_ID to id,
+				KEY_PAYLOAD to payload,
+				KEY_TECH_LIST to techList
+		)
 
 		mapOf(KEY_ERROR to "", KEY_MESSAGE to message)
 	} catch (e: Exception) {
@@ -53,13 +54,28 @@ fun getPayloadMessages(tag: Tag?): List<String>? {
 }
 
 fun recordToString(record: NdefRecord): String {
+	if (record.tnf == NdefRecord.TNF_EMPTY) {
+		return ""
+	}
+
 	if (record.toUri() != null) {
 		return record.toUri().toString()
 	}
 
-	val payload = record.payload
-	val languageCodeLength = (payload[0] and 51) + 1
-	return String(payload, languageCodeLength, payload.size - languageCodeLength, Charset.forName("UTF-8"))
+	try {
+		val payload = record.payload
+		val charset = if ((payload[0] and 0x080.toByte()) === 0.toByte())  Charsets.UTF_8 else Charsets.UTF_16
+
+		if (record.tnf == NdefRecord.TNF_WELL_KNOWN && record.type contentEquals NdefRecord.RTD_TEXT) {
+			val languageLength: Int = (payload[0] and 0x3f).toInt() + 1
+			return String(payload, languageLength, payload.size - languageLength, charset)
+		}
+
+		return String(payload, charset)
+	} catch (e: java.lang.Exception) {
+		Log.e(PLUGIN_TAG, "Cannot parse payload message $e")
+	}
+	return ""
 }
 
 fun getNfcState(adapter: NfcAdapter?): String {

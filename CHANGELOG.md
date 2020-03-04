@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Changed: intelligent payload reading with errors handling
+
 ## 0.0.5
 
 * Fixed: can't read tag id if the message is null
