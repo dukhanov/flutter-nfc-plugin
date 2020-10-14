@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Support latest flutter
+
 ## 0.0.6
 
 * Changed: intelligent payload reading with errors handling
