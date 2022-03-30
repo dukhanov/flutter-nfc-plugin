@@ -13,30 +13,32 @@ class NfcPlugin {
           EventChannel('nfc_plugin_event_channel');
       _instance = NfcPlugin.private(methodChannel, eventChannel);
     }
-    return _instance;
+    return _instance!;
   }
 
   NfcPlugin.private(this._methodChannel, this._eventChannel);
 
-  static NfcPlugin _instance;
+  static NfcPlugin? _instance;
 
   final MethodChannel _methodChannel;
   final EventChannel _eventChannel;
-  Stream<NfcEvent> _onNfcMessage;
+  Stream<NfcEvent>? _onNfcMessage;
 
   /// Check if NFC is enabled
   Future<NfcState> get nfcState => _methodChannel
       .invokeMethod<String>('getNfcState')
-      .then<NfcState>((String result) => parseNfcState(result));
+      .then<NfcState>((String? result) => parseNfcState(result));
 
   /// Check if the app was started with NFC
   /// and get NFC message started with
-  Future<NfcEvent> get nfcStartedWith =>
-      _methodChannel.invokeMethod<dynamic>('getNfcStartedWith').then<NfcEvent>(
-          (dynamic event) => event != null ? NfcEvent.fromMap(event) : null);
+  Future<NfcEvent?> get nfcStartedWith => _methodChannel
+          .invokeMethod<dynamic>('getNfcStartedWith')
+          .then<NfcEvent?>((dynamic event) {
+        return event != null ? NfcEvent.fromMap(event) : null;
+      });
 
   /// Fires whenever the nfc message received.
-  Stream<NfcEvent> get onNfcMessage {
+  Stream<NfcEvent>? get onNfcMessage {
     _onNfcMessage ??= _eventChannel
         .receiveBroadcastStream()
         .map((dynamic event) => NfcEvent.fromMap(event));

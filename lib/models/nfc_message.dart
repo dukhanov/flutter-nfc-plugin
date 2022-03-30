@@ -11,7 +11,7 @@ class NfcMessage {
         techList: data['techList']?.cast<String>(),
       );
 
-  String id;
-  List<String> payload;
-  List<String> techList;
+  String? id;
+  List<String>? payload;
+  List<String>? techList;
 }
