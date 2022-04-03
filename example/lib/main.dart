@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_nfc_plugin/models/nfc_event.dart';
 import 'package:flutter_nfc_plugin/models/nfc_message.dart';
@@ -19,11 +19,11 @@ class _MyAppState extends State<MyApp> {
   String nfcError = '';
   String nfcMessage = '';
   String nfcTechList = '';
-  String nfcId = '';
-  NfcMessage nfcMessageStartedWith;
+  String? nfcId = '';
+  NfcMessage? nfcMessageStartedWith;
 
   NfcPlugin nfcPlugin = NfcPlugin();
-  StreamSubscription<NfcEvent> _nfcMesageSubscription;
+  StreamSubscription<NfcEvent>? _nfcMesageSubscription;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    NfcState _nfcState;
+    NfcState? _nfcState;
 
     try {
       _nfcState = await nfcPlugin.nfcState;
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      final NfcEvent _nfcEventStartedWith = await nfcPlugin.nfcStartedWith;
+      final NfcEvent? _nfcEventStartedWith = await nfcPlugin.nfcStartedWith;
       print('NFC event started with is ${_nfcEventStartedWith.toString()}');
       if (_nfcEventStartedWith != null) {
         setState(() {
@@ -54,17 +54,17 @@ class _MyAppState extends State<MyApp> {
     }
 
     if (_nfcState == NfcState.enabled) {
-      _nfcMesageSubscription = nfcPlugin.onNfcMessage.listen((NfcEvent event) {
-        if (event.error.isNotEmpty) {
+      _nfcMesageSubscription = nfcPlugin.onNfcMessage!.listen((NfcEvent event) {
+        if (event.error!.isNotEmpty) {
           setState(() {
             nfcMessage = 'ERROR: ${event.error}';
             nfcId = '';
           });
         } else {
           setState(() {
-            nfcMessage = event.message.payload.toString();
-            nfcTechList = event.message.techList.toString();
-            nfcId = event.message.id;
+            nfcMessage = event.message!.payload.toString();
+            nfcTechList = event.message!.techList.toString();
+            nfcId = event.message!.id;
           });
         }
       });
@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
     if (_nfcMesageSubscription != null) {
-      _nfcMesageSubscription.cancel();
+      _nfcMesageSubscription!.cancel();
     }
   }
 }

@@ -13,6 +13,6 @@ class NfcEvent {
             : null,
       );
 
-  String error;
-  NfcMessage message;
+  String? error;
+  NfcMessage? message;
 }

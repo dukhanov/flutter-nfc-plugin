@@ -97,7 +97,7 @@ fun getNfcStartedWith(intent: Intent): Map<String, Any?>? {
 			return message
 		}
 		NfcAdapter.ACTION_TECH_DISCOVERED -> {
-			for (tagTech in tag.techList) {
+			for (tagTech in tag!!.techList) {
 				Log.d(PLUGIN_TAG, "action ACTION_TECH_DISCOVERED")
 				if (tagTech == NdefFormatable::class.java.name) {
 					val message = ndefToMap(tag)

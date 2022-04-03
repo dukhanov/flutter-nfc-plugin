@@ -1,6 +1,6 @@
 enum NfcState { enabled, disabled, notSupported }
 
-NfcState parseNfcState(String state) {
+NfcState parseNfcState(String? state) {
   switch (state) {
     case 'enabled':
       return NfcState.enabled;
